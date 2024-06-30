@@ -11,16 +11,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.mycompany.quizzgame.implementdao.UserDaoImpl;
+import com.mycompany.quizzgame.dto.User;
 
 /**
  *
- * @author NiainaTR
+ * @author tsant
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "SignupServlet", urlPatterns = {"/SignupServlet"})
+public class SignupServlet extends HttpServlet {
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP <code>POST</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -28,13 +31,18 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         String username = request.getParameter("username");
-        String pwd = request.getParameter("pwd");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
         
-        System.out.println("uername : " + username + " , password : " + pwd);
+        User newUser = new User(username , email , password);
+        
+        UserDaoImpl userDaoImplement = new UserDaoImpl();
+        userDaoImplement.addUser(newUser);
         
     }
+
 }

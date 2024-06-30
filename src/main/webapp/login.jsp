@@ -14,15 +14,14 @@
     </head>
     <body>
         <div class="form-box">
-            <form class="form">
+            <form action="LoginServlet" method="post" class="form">
                 <span class="title">Se connecter</span>
                 <span class="subtitle">Ajouter votre information de compte.</span>
                 <div class="form-container">
-                    <input type="text" class="input" placeholder="Nom d'utilisateur">
-                    <input type="email" class="input" placeholder="Email">
-                    <input type="password" class="input" placeholder="Mot de passe">
+                    <input type="text" class="input" placeholder="Nom d'utilisateur" name="username">
+                    <input type="password" class="input" placeholder="Mot de passe" name="pwd">
                 </div>
-                <button>Se connecter</button>
+                <button type="submit">Se connecter</button>
             </form>
             <div class="form-section">
               <p>Vous n'avez pas encore de compte? <a href="signup.jsp">Créer un compte</a> </p>
