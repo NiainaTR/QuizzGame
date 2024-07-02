@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.mycompany.quizzgame.implementdao.UserDaoImpl;
-import com.mycompany.quizzgame.dto.User;
+import com.mycompany.quizzgame.models.User;
 
 /**
  *
@@ -41,7 +41,7 @@ public class SignupServlet extends HttpServlet {
         User newUser = new User(username , email , password);
         UserDaoImpl userDaoImplement = new UserDaoImpl();
         userDaoImplement.addUser(newUser);
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("/QuizzGame/");
     }
 
 }

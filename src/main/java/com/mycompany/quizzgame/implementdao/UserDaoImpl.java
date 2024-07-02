@@ -4,7 +4,7 @@
  */
 package com.mycompany.quizzgame.implementdao;
 import com.mycompany.quizzgame.interfacedao.UserDao;
-import com.mycompany.quizzgame.dto.User;
+import com.mycompany.quizzgame.models.User;
 import com.mycompany.quizzgame.utils.ConnectDB;
 import java.util.List;
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ public class UserDaoImpl implements UserDao{
     @Override
     public void addUser(User user){        
         try(Connection conn = ConnectDB.getConnection()){
-           final String INSERT_USER = "INSERT INTO users (username , email , password) values (? , ? , ?)";  
-           PreparedStatement stmt = conn.prepareStatement(INSERT_USER);
+           final String SQL = "INSERT INTO users (username , email , password) values (? , ? , ?)";  
+           PreparedStatement stmt = conn.prepareStatement(SQL);
            stmt.setString(1 , user.getUsername());
            stmt.setString(2 , user.getEmail());
            stmt.setString(3 , user.getPassword());
@@ -51,7 +51,7 @@ public class UserDaoImpl implements UserDao{
     
     
     @Override 
-    public void deleteUser(String email){
+    public void deleteUser(int id){
         
     }
     
@@ -61,14 +61,15 @@ public class UserDaoImpl implements UserDao{
         User user = null;
         
         try(Connection con = ConnectDB.getConnection()){
-            final String CHECK_USER_ACCOUNT = "SELECT * FROM users WHERE  email = ? AND password = ?";
-            PreparedStatement stmt = con.prepareStatement(CHECK_USER_ACCOUNT);
+            final String SQL = "SELECT * FROM users WHERE  email = ? AND password = ?";
+            PreparedStatement stmt = con.prepareStatement(SQL);
             stmt.setString(1 , email);
             stmt.setString(2 , password);
             
             ResultSet resultSet = stmt.executeQuery();
             if(resultSet.next()){                
                user = new User(resultSet.getString("username") , resultSet.getString("email") , resultSet.getString("password"));
+               user.setId(resultSet.getInt("id"));
             }     
             
             resultSet.close();

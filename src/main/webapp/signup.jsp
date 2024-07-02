@@ -25,7 +25,7 @@
                 <button type="submit">Valider</button>
             </form>
             <div class="form-section">
-              <p>Vous avez déjà un compte? <a href="login.jsp">Se connecter</a></p>
+              <p>Vous avez déjà un compte? <a href="/QuizzGame/">Se connecter</a></p>
             </div>
         </div>
     </body>

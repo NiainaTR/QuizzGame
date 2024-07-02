@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.mycompany.quizzgame.implementdao.UserDaoImpl;
-import com.mycompany.quizzgame.dto.User;
+import com.mycompany.quizzgame.models.User;
 
 /**
  *
@@ -41,14 +41,16 @@ public class LoginServlet extends HttpServlet {
         UserDaoImpl userDaoImpl = new UserDaoImpl();
         
         User user = userDaoImpl.isUserExist(email , pwd);
+        
         if(user != null){
             HttpSession session = request.getSession();
+            session.setAttribute("id" , user.getId());
             session.setAttribute("username", user.getUsername());
             session.setAttribute("email" , user.getEmail());
-            response.sendRedirect("Game.jsp");
+            response.sendRedirect("game.jsp");
         }
         else{
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("/QuizzGame/");
         }
     }
 }
