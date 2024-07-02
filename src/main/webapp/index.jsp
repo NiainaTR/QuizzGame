@@ -13,5 +13,7 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+        <a href="login.jsp">Se connecter</a>
+        <a href="signup.jsp">Créer un compte</a>
     </body>
 </html>

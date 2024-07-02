@@ -7,11 +7,12 @@ import com.mycompany.quizzgame.dto.User;
 import java.util.List;
 /**
  *
- * @author tsant
+ * @author NiainaTR
  */
 public interface UserDao {
     List<User> getAllUsers();
     void addUser(User user);
-    void deleteUser(int id);
+    void deleteUser(String email);
     void updateUser(User user);
+    User isUserExist(String email , String password);
 }

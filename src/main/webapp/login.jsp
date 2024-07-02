@@ -18,8 +18,8 @@
                 <span class="title">Se connecter</span>
                 <span class="subtitle">Ajouter votre information de compte.</span>
                 <div class="form-container">
-                    <input type="text" class="input" placeholder="Nom d'utilisateur" name="username">
-                    <input type="password" class="input" placeholder="Mot de passe" name="pwd">
+                    <input type="text" class="input" placeholder="Email" name="email" required>
+                    <input type="password" class="input" placeholder="Mot de passe" name="pwd" required>
                 </div>
                 <button type="submit">Se connecter</button>
             </form>

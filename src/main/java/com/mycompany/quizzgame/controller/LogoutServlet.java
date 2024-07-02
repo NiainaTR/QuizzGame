@@ -5,21 +5,19 @@
 package com.mycompany.quizzgame.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.mycompany.quizzgame.implementdao.UserDaoImpl;
-import com.mycompany.quizzgame.dto.User;
-
+import javax.servlet.http.HttpSession;
 /**
  *
  * @author tsant
  */
-@WebServlet(name = "SignupServlet", urlPatterns = {"/SignupServlet"})
-public class SignupServlet extends HttpServlet {
+@WebServlet(name = "LogoutServlet", urlPatterns = {"/LogoutServlet"})
+public class LogoutServlet extends HttpServlet {
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -31,17 +29,12 @@ public class SignupServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        String username = request.getParameter("username");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        
-        User newUser = new User(username , email , password);
-        UserDaoImpl userDaoImplement = new UserDaoImpl();
-        userDaoImplement.addUser(newUser);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if(session != null){
+            session.invalidate();
+        }
         response.sendRedirect("login.jsp");
     }
-
 }

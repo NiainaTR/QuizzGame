@@ -11,6 +11,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.mycompany.quizzgame.implementdao.UserDaoImpl;
+import com.mycompany.quizzgame.dto.User;
 
 /**
  *
@@ -30,11 +34,21 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String username = request.getParameter("username");
+       
+        String email = request.getParameter("email");
         String pwd = request.getParameter("pwd");
         
-        System.out.println("uername : " + username + " , password : " + pwd);
+        UserDaoImpl userDaoImpl = new UserDaoImpl();
         
+        User user = userDaoImpl.isUserExist(email , pwd);
+        if(user != null){
+            HttpSession session = request.getSession();
+            session.setAttribute("username", user.getUsername());
+            session.setAttribute("email" , user.getEmail());
+            response.sendRedirect("Game.jsp");
+        }
+        else{
+            response.sendRedirect("login.jsp");
+        }
     }
 }
