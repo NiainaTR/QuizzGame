@@ -11,17 +11,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import java.util.ArrayList;
-
-import com.mycompany.quizzgame.implementdao.UserDaoImpl;
-import com.mycompany.quizzgame.models.User;
+import com.mycompany.quizzgame.implementdao.GameDaoImpl;
+import com.mycompany.quizzgame.utils.Question;
 /**
  *
- * @author NiainaTR
+ * @author tsant
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "GameCardServlet", urlPatterns = {"/GameCardServlet"})
+public class GameCardServlet extends HttpServlet {
     
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -34,23 +31,25 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-        String email = request.getParameter("email");
-        String pwd = request.getParameter("pwd");
         
-        UserDaoImpl userDaoImpl = new UserDaoImpl();
+        HttpSession session = request.getSession(false);
+        String theme = request.getParameter("theme");
         
-        User user = userDaoImpl.isUserExist(email , pwd);
-        
-        if(user != null){
-            HttpSession session = request.getSession();
-            session.setAttribute("id" , user.getId());
-            session.setAttribute("username", user.getUsername());
-            session.setAttribute("email" , user.getEmail());
-            response.sendRedirect("game.jsp");
+        if(session != null){
+           int id = (int)session.getAttribute("id");
+           GameDaoImpl game = new GameDaoImpl();
+           System.out.println("id : " + id + " theme : " + theme);
+           Question firstQuestion = game.getFirstGameQuestion(id, theme);
+           if(firstQuestion != null){
+               System.out.println("first question : " + firstQuestion.questionText);
+            
+               request.setAttribute("firstQuestion" , firstQuestion);
+               request.getRequestDispatcher("gamecard.jsp").forward(request, response);
+            }
         }
         else{
             response.sendRedirect("/QuizzGame/");
         }
     }
+
 }
